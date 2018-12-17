@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+</head>
+<style>
+    .mp-keyboard{
+        position: absolute;
+        bottom:380px;
+        left: 425px;
+        display: inline-block;
+        background: #fff;
+        border: 1px solid #dddddd;
+        padding: 3px;
+    }
+    .mp-keys{
+        display:inline-block; 
+        width:50px; 
+        height:50px; 
+        background: #cdcdcd; 
+        cursor: pointer;
+        text-align: center;
+        margin: 3px;
+    }
+    .mp-keys:hover{
+        background:lightblue;
+    }
+</style>
+<body id="page-top">
+    <div style="margin: 50px auto; width: 500px;">
+        <p>Musical Password JS Sample</p>
+        <input id="password" type="text" value="hello world"/>
+        <div class="mp-keyboard">
+            <span class="mp-keys" data-key="so-c">C</span>
+            <span class="mp-keys" data-key="so-d">D</span>
+            <span class="mp-keys" data-key="so-e">E</span>
+            <span class="mp-keys" data-key="so-f">F</span>
+            <br>
+            <span class="mp-keys" data-key="so-g">G</span>
+            <span class="mp-keys" data-key="so-a">A</span>
+            <span class="mp-keys" data-key="so-b">B</span>
+            <span class="mp-keys" data-key="fo-c">C</span>
+            <br><button id="clear-mp-input">Clear</button>
+        </div>
+        <input type="submit" value="Submit">
+    </div>
+    <script src="mp.js"></script>
+</body>
+
+</html>
