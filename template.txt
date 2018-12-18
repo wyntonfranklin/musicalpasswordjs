@@ -1,0 +1,13 @@
+        <div id="mp-ds-div" class="mp-keyboard">
+            <span class="mp-keys" data-key="so-c">C</span>
+            <span class="mp-keys" data-key="so-d">D</span>
+            <span class="mp-keys" data-key="so-e">E</span>
+            <span class="mp-keys" data-key="so-f">F</span>
+            <br>
+            <span class="mp-keys" data-key="so-g">G</span>
+            <span class="mp-keys" data-key="so-a">A</span>
+            <span class="mp-keys" data-key="so-b">B</span>
+            <span class="mp-keys" data-key="fo-c">C</span>
+            <br><button id="clear-mp-input">Clear</button>
+        </div>
+        <input type="submit" value="Submit">

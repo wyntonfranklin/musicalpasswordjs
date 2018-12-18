@@ -1,0 +1,26 @@
+/*!
+ * Start Bootstrap - New Age v5.0.0 (https://startbootstrap.com/template-overviews/new-age)
+ * Copyright 2013-2018 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-new-age/blob/master/LICENSE)
+ */
+
+.wf-mp-keyboard{
+    position: absolute;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #dddddd;
+    padding: 3px;
+    display: none;
+}
+.wf-mp-keys{
+    display:inline-block; 
+    width:50px; 
+    height:50px; 
+    background: #cdcdcd; 
+    cursor: pointer;
+    text-align: center;
+    margin: 3px;
+}
+.wf-mp-keys:hover{
+    background:lightblue;
+}
