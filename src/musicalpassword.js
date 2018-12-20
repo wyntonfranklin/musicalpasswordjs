@@ -16,14 +16,14 @@
     timer=0,
     timerId,
     keysSource = {
-        "so-c" : "assets/s0c.mp3",
-        "so-d" : "assets/s0d.mp3",
-        "so-e" : "assets/s0e.mp3",
-        "so-f" : "assets/s0f.mp3",
-        "so-g" : "assets/s0g.mp3",
-        "so-a" : "assets/s0a.mp3",
-        "so-b" : "assets/s0b.mp3",
-        "fo-c" : "assets/f0c.mp3"
+        "so-c" : "../assets/s0c.mp3",
+        "so-d" : "../assets/s0d.mp3",
+        "so-e" : "../assets/s0e.mp3",
+        "so-f" : "../assets/s0f.mp3",
+        "so-g" : "../assets/s0g.mp3",
+        "so-a" : "../assets/s0a.mp3",
+        "so-b" : "../assets/s0b.mp3",
+        "fo-c" : "../assets/f0c.mp3"
     },
     divTags = {
         "so-c" : "C",
@@ -48,7 +48,7 @@
     defaults = {
         offset : 30,
         timer : true,
-        identifier:"default"
+        identifier:"default",
     };
 
     function Plugin(element, options) {
@@ -67,21 +67,23 @@
 
             $(this.element).attr("readOnly","readOnly");
 
-            draw(); // draw layout
+            this.keyboard = $(draw());  // draw layout
+            $(document.body).append(this.keyboard);
+
             $(this.element).on("click",function(){
                 console.log(_this.settings);
-                var position = $(this).offset();
+                var position = $(_this.element).offset();
                 var tp = position.top + defaults.offset;
-                var divElement = $('div[style*="top: '+tp+'px"]');
-                onElementClicked(this, divElement);
+                onElementClicked(this, _this.keyboard);
                 clearKeyboardLayouts();
-                divElement.css({"display":"inline-block"});
+                _this.keyboard.css({"display":"inline-block",
+                    "top":tp+'px',"left":position.left + "px"});
                 return false;
             });
 
 
             function onElementClicked(el, $div){
-                if(!$div.find(".wf-mp-keys").length > 0){
+                if($div.find(".wf-mp-keys").length <= 0){
                     var keysHtml = generateKeysHtml();
                     $div.prepend(keysHtml);
                     $div.on('click',".wf-mp-keys",function(event){
@@ -113,10 +115,10 @@
                 var $element = $(element);
                 var key = $element.data("key");
                 if(keysSource[key]!== null){
-                    play(keysSource[key])
-                    outputPassword(key);
-                    if(defaults.timer){
-                      //  recordTiming();
+                    play(keysSource[key]);
+                    outputPassword(passwordMapping[key]);
+                    if(_this.settings.timer){
+                        recordTiming();
                     }
                 }
             }
@@ -132,24 +134,20 @@
 
 
             function draw(){
-                var elPosition = $(_this.element).offset();
-                console.log(elPosition);
-                var topPosition = elPosition.top + defaults.offset;
-                var leftPosition = elPosition.left;
-                generateHtml(topPosition, leftPosition);
+                return generateHtml();
             }
 
-            function generateHtml(top, left){
-                var header = '<div class="wf-mp-keyboard" style="top: '+top+'px; left:'+left+'px">';
+            function generateHtml(){
+                var header = '<div class="wf-mp-keyboard">';
                 var clearButton ='<br><input class="wf-mp-clear" type="button" value="Clear">';
                 var finishButton = '<input class="wf-done-button" type="button" value="Done">';
                 var footer = '</div>';
                 var output = header;
                 output+= clearButton;
-                if(defaults.timer)
+                if(_this.settings.timer)
                     output += finishButton; 
                 output+= footer;
-                $(document.body).append(output);
+                return output;
             }
 
             function generateKeysHtml(){
@@ -172,7 +170,7 @@
             function outputPassword(key){
                 var $el = $(_this.element);
                 var currentValue = $el.val();
-                var updatedPassword = currentValue+ passwordMapping[key]
+                var updatedPassword = currentValue+key;
                 $el.val(updatedPassword);
                 console.log("element value is: " + $el.val());   
                 console.log("element id is : " + $el.attr("id"));  
@@ -198,7 +196,7 @@
                 clearInterval(timerId);
                 timing.push(timer);
                 console.log("Current time " + timer);
-                outputPassword();
+                timer=0;
             }
         }
 

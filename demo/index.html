@@ -11,7 +11,7 @@
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="musicalPassword.css">
+    <link rel="stylesheet" href="../src/musicalPassword.css">
 </head>
 <body id="page-top">
     <div style="margin: 50px auto; width: 500px;">
@@ -23,10 +23,10 @@
         <label>Form Password</label>
         <input id="password" type="password" value=""/>
     </div>
-    <script src="musicalPassword.js"></script>
+    <script src="../src/musicalpassword.js"></script>
 </body>
     <script>
-        $("#password").musicalPassword({identifier:"password"});
+        $("#password").musicalPassword({identifier:"password",timer:false});
         $("#song").musicalPassword({identifier:"song"});
     </script>
 </html>

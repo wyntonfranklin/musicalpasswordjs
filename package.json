@@ -1,5 +1,5 @@
 {
-  "name": "musicalpasswordjs",
+  "name": "musicalpassword",
   "version": "1.0.0",
   "description": "A password input that use musical notes",
   "main": "musicalPassword.js",
@@ -13,7 +13,11 @@
     "type": "git",
     "url": "git+https://github.com/wyntonfranklin/musicalpasswordjs.git"
   },
-  "author": "Wynton Franklin",
+  "author": {
+    "name": "Wynton Franklin",
+    "email": "wfdevservices@gmail.com",
+    "url": "https://github.com/wyntonfranklin"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/wyntonfranklin/musicalpasswordjs/issues"
@@ -21,6 +25,10 @@
   "homepage": "https://github.com/wyntonfranklin/musicalpasswordjs#readme",
   "dependencies": {},
   "devDependencies": {
-    "grunt": "^1.0.3"
+    "grunt": "^1.0.3",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^2.0.0",
+    "grunt-contrib-uglify": "^4.0.0",
+    "grunt-eslint": "^21.0.0"
   }
 }
