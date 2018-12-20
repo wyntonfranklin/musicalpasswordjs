@@ -16,14 +16,14 @@
     timer=0,
     timerId,
     keysSource = {
-        "so-c" : "../assets/s0c.mp3",
-        "so-d" : "../assets/s0d.mp3",
-        "so-e" : "../assets/s0e.mp3",
-        "so-f" : "../assets/s0f.mp3",
-        "so-g" : "../assets/s0g.mp3",
-        "so-a" : "../assets/s0a.mp3",
-        "so-b" : "../assets/s0b.mp3",
-        "fo-c" : "../assets/f0c.mp3"
+        "so-c" : "./assets/s0c.mp3",
+        "so-d" : "./assets/s0d.mp3",
+        "so-e" : "./assets/s0e.mp3",
+        "so-f" : "./assets/s0f.mp3",
+        "so-g" : "./assets/s0g.mp3",
+        "so-a" : "./assets/s0a.mp3",
+        "so-b" : "./assets/s0b.mp3",
+        "fo-c" : "./assets/f0c.mp3"
     },
     divTags = {
         "so-c" : "C",
