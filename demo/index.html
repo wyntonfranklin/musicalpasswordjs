@@ -26,7 +26,13 @@
     <script src="../src/musicalpassword.js"></script>
 </body>
     <script>
-        $("#password").musicalPassword({identifier:"password",timer:false});
-        $("#song").musicalPassword({identifier:"song"});
+        $("#password").musicalPassword({
+            timer:true,
+            assetsBaseDir:"../assets/"
+        });
+        $("#song").musicalPassword({
+            identifier:"song",
+            assetsBaseDir:"../assets/"
+        });
     </script>
 </html>

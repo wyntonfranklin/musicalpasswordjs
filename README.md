@@ -18,7 +18,10 @@ Musical password allows you to create passwords with musical notes. It creates a
 <script src="build/musicalpassword.min.js"></script>
 ```
 
-3. Call the plugin:
+3. Add the assets folder with the all the mp3 files.
+   Use need to add the assets folder to you working directory. The assets has the mp3 files you need to play the sounds.
+
+4. Call the plugin
 
 ```javascript
 $("#element").musicalpassword({
@@ -32,9 +35,18 @@ $("#element").musicalpassword({
 
 - timer:
   Adding a  time value to your password. You will have to play the tune within the correct time.
+- assetsBaseDir:
+  The location of the base directory where the assets can be found. The plugin will look in the folder to find the mp3 files to play.
 
 
+
+### Events
+
+- donebuttonpressed.musicalpassword
+  The done button has been pressed. This occurs if the timer is active.
+- clearinput.musicalpassword
+  The input has been cleared using the clear button
 
 ### Demo
 
-https://wyntonfranklin.github.io/musicalpasswordjs/
+http://www.igestdevelopment.com/musicalpasswordjs/

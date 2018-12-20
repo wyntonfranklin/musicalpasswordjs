@@ -16,14 +16,14 @@
     timer=0,
     timerId,
     keysSource = {
-        "so-c" : "./assets/s0c.mp3",
-        "so-d" : "./assets/s0d.mp3",
-        "so-e" : "./assets/s0e.mp3",
-        "so-f" : "./assets/s0f.mp3",
-        "so-g" : "./assets/s0g.mp3",
-        "so-a" : "./assets/s0a.mp3",
-        "so-b" : "./assets/s0b.mp3",
-        "fo-c" : "./assets/f0c.mp3"
+        "so-c" : "s0c.mp3",
+        "so-d" : "s0d.mp3",
+        "so-e" : "s0e.mp3",
+        "so-f" : "s0f.mp3",
+        "so-g" : "s0g.mp3",
+        "so-a" : "s0a.mp3",
+        "so-b" : "s0b.mp3",
+        "fo-c" : "f0c.mp3"
     },
     divTags = {
         "so-c" : "C",
@@ -47,7 +47,8 @@
     },
     defaults = {
         offset : 30,
-        timer : true,
+        timer : false,
+        assetsBaseDir:'./assets/',
         identifier:"default",
     };
 
@@ -91,12 +92,15 @@
                         return false;
                     });
                     $div.on('click','.wf-mp-clear',function(){
+                        $(_this.element).trigger('clearinput.musicalpassword');
                         clearInput();
                         return false;
                     });
                     $div.on('click','.wf-done-button',function(){
+                        $(_this.element).trigger('donebuttonpressed.musicalpassword');
                         console.log("Done button pressed");
                         stopRecording();
+                        clearKeyboardLayouts();
                         return false;
                     });
                 }
@@ -128,7 +132,8 @@
             }
 
             function play(source){
-                var audio = new Audio(source);
+                var mp3Url = _this.settings.assetsBaseDir + source;
+                var audio = new Audio(mp3Url);
                 audio.play();
             }
 
@@ -173,7 +178,6 @@
                 var updatedPassword = currentValue+key;
                 $el.val(updatedPassword);
                 console.log("element value is: " + $el.val());   
-                console.log("element id is : " + $el.attr("id"));  
             }
 
             function clearInput(){

@@ -46,7 +46,7 @@ crossorigin="anonymous"></script>
     <ul class="docs-nav">
       <li><strong>Overview</strong></li>
       <li><a href="#welcome" class="cc-active">Installation</a></li>
-      <li><a href="#options" class="cc-active">Options</a></li>
+      <li><a href="#options" class="cc-active">Options &amp; Events</a></li>
       <li><a href="#demo" class="cc-active">Demo</a></li>
       <li><a href="#download" class="cc-active">Download</a></li>
     </ul>
@@ -71,20 +71,38 @@ crossorigin="anonymous"></script>
               timer: false
           });&lt;/script&gt;
         </pre>
-        <br>
+        <p><strong>Important!</strong> - You need to include the assets folder with the mp3 files for this plugin to work.
+        You can rename the <strong>assets folder</strong> and point to it via the assetsBaseDir option.</p>
+      
       <h3 id="options">Options</h3>
       <ul>
-        <li><b>Timer:</b>
+        <li><strong>Timer:</strong><br>
             Adding a  time field to your password. You will have to play the tune within the correct time.
+        </li>
+        <li>
+          <strong>assetsBaseDir:</strong><br>
+          The location of the base directory where the assets can be found. 
+          The plugin will look in the folder to find the mp3 files to play.
+        </li>
+      </ul>
+      <h3>Events</h3>
+      <ul>
+        <li><strong>donebuttonpressed.musicalpassword:</strong><br>
+            The done button has been pressed. This occurs if the timer is active.
+        </li>
+        <li><strong>clearinput.musicalpassword:</strong><br>
+            The input has been cleared using the clear button
         </li>
       </ul>
       <h3 id="demo">Demo</h3>
       <div style="margin: 50px auto; width: 500px;">
-          <p><b>Musical Password JS Sample</b></p>
+          <p><strong>Musical Password JS Sample</strong></p>
           <label>Form Text Field</label><br>
           <input id="song" type="text" value=""/><br><br>
           <label>Form Password Field</label>
-          <input id="password" type="password" value=""/>
+          <input id="password" type="password" value=""/><br><br>
+          <label>Event Text Field - On Done Pressed</label>
+          <input id="eventfield" type="text" value=""/>
       </div>
       <h3 id="download">Download</h3>
       <p>This project can be found on github. 
@@ -113,8 +131,18 @@ crossorigin="anonymous"></script>
 </body>
 <script>
   $(document).ready(function(){
-    $("#password").musicalPassword({identifier:"password",timer:false});
-    $("#song").musicalPassword({identifier:"song"});
+    $("#password").musicalPassword({
+      assetBaseDir:"../assets/"
+    });
+    $("#song").musicalPassword({
+      assetBaseDir:"../assets/"
+    });
+    $("#eventfield").musicalPassword({
+      timer:true,
+      assetBaseDir:"../assets/"
+    }).on("donebuttonpressed.musicalpassword",function(){
+       alert("the done button is pressed");
+    });
   });
 </script>
 </html>
