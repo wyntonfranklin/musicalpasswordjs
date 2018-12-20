@@ -12,11 +12,6 @@
 ;(function($, window, document, undefined) {
 
     var musicalPassword = "musicalPassword",
-    mpDivId ="wf-mp-ds-div",
-    mpDivClass="wf-mp-keyboard",
-    mpKeysClass="wf-mp-keys",
-    mpClearButtonId="wf-mp-clear",
-    formatedPassword="",
     timing = [],
     timer=0,
     timerId,
@@ -40,9 +35,20 @@
         "so-b" : "B",
         "fo-c" : "C",
     },
+    passwordMapping = {
+        "so-c" : "P)x!6r",
+        "so-d" : "R8b]e6",
+        "so-e" : "FQz_8s",
+        "so-f" : "zy3-Bv",
+        "so-g" : "p#2W9A",
+        "so-a" : "2<r@R9",
+        "so-b" : "5ZgR_7",
+        "fo-c" : "5?+xU$",
+    },
     defaults = {
         offset : 30,
         timer : true,
+        identifier:"default"
     };
 
     function Plugin(element, options) {
@@ -53,84 +59,92 @@
 		this.init();
     }
 
-    Plugin.prototype = {
+    $.extend( Plugin.prototype, {
         init: function() {
             var _this = this;
 
             console.log("plugin started...");
-            $(this.element).attr("readOnly","readOnly");
-            draw(); // draw layout
 
-            var mpDisplay = $("#"+mpDivId);
+            $(this.element).attr("readOnly","readOnly");
+
+            draw(); // draw layout
             $(this.element).on("click",function(){
-                console.log("Field clicked...");
-                var elPosition = $(this).offset();
-                var topPosition = elPosition.top + defaults.offset;
-                mpDisplay.css({"display":"inline-block"});
-                mpDisplay.css({left:elPosition.left,top:topPosition});
+                console.log(_this.settings);
+                var position = $(this).offset();
+                var tp = position.top + defaults.offset;
+                var divElement = $('div[style*="top: '+tp+'px"]');
+                onElementClicked(this, divElement);
+                clearKeyboardLayouts();
+                divElement.css({"display":"inline-block"});
                 return false;
             });
-            $("."+mpKeysClass).on("click",function(event){
-                event.stopPropagation();
-                var key = $(this).data("key");
-                if(keysSource[key]!== null){
-                    play(keysSource[key])
-                    generatePassword(key)
-                    outputPassword();
-                    if(defaults.timer){
-                        recordTiming();
-                    }
+
+
+            function onElementClicked(el, $div){
+                if(!$div.find(".wf-mp-keys").length > 0){
+                    var keysHtml = generateKeysHtml();
+                    $div.prepend(keysHtml);
+                    $div.on('click',".wf-mp-keys",function(event){
+                        onKeysClicked(event, this);
+                        return false;
+                    });
+                    $div.on('click','.wf-mp-clear',function(){
+                        clearInput();
+                        return false;
+                    });
+                    $div.on('click','.wf-done-button',function(){
+                        console.log("Done button pressed");
+                        stopRecording();
+                        return false;
+                    });
                 }
-            });
-            $("#"+mpClearButtonId).on("click",function(){
-                clearInput();
-                return false; 
-            });
-            $("#wf-done-button").on("click",function(){
-                console.log("Done button pressed");
-                stopRecording();
-                return false;
-            });
+
+            }
             $(document).on("click",function(){
-                mpDisplay.css({"display":"none"});
+                clearKeyboardLayouts();
             });
             $(this.element).on('keydown', function(event) {
                 var key = event.keyCode || event.charCode;
                 return false;
             });
 
+            function onKeysClicked(event, element){
+                event.stopPropagation();
+                var $element = $(element);
+                var key = $element.data("key");
+                if(keysSource[key]!== null){
+                    play(keysSource[key])
+                    outputPassword(key);
+                    if(defaults.timer){
+                      //  recordTiming();
+                    }
+                }
+            }
+
+            function clearKeyboardLayouts(){
+                $(".wf-mp-keyboard").css({"display":"none"});  
+            }
+
             function play(source){
                 var audio = new Audio(source);
                 audio.play();
             }
 
-            function generatePassword(attribute){
-                formatedPassword = formatedPassword+attribute;
-                console.log(formatedPassword);
-            }
 
             function draw(){
-                generateHtml();
+                var elPosition = $(_this.element).offset();
+                console.log(elPosition);
+                var topPosition = elPosition.top + defaults.offset;
+                var leftPosition = elPosition.left;
+                generateHtml(topPosition, leftPosition);
             }
 
-            function generateHtml(){
-                var header = '<div id="'+mpDivId+'" class="'+mpDivClass+'">';
-                var clearButton ='<br><input id="'+mpClearButtonId+'" type="button" value="Clear">';
-                var finishButton = '<input id="wf-done-button" type="button" value="Done">';
+            function generateHtml(top, left){
+                var header = '<div class="wf-mp-keyboard" style="top: '+top+'px; left:'+left+'px">';
+                var clearButton ='<br><input class="wf-mp-clear" type="button" value="Clear">';
+                var finishButton = '<input class="wf-done-button" type="button" value="Done">';
                 var footer = '</div>';
-                var pageBreak = '<br>';
-                var counter=0;
-                var showtemplate = function(key, name){
-                    var template = '<span class="'+mpKeysClass+'" data-key="'+key+'">'+name+'</span>';  
-                    return template;  
-                };
                 var output = header;
-                for (var prop in divTags) {
-                    if(counter==4)
-                        output += pageBreak;
-                    output += showtemplate(prop,divTags[prop]);
-                    counter++;
-                }
                 output+= clearButton;
                 if(defaults.timer)
                     output += finishButton; 
@@ -138,22 +152,41 @@
                 $(document.body).append(output);
             }
 
-            function outputPassword(){
-                $(_this.element).val(formatedPassword);
-                console.log(formatedPassword);     
+            function generateKeysHtml(){
+                var output="";
+                var pageBreak = '<br>';
+                var counter=0;
+                var showtemplate = function(key, name){
+                    var template = '<span class="wf-mp-keys" data-key="'+key+'">'+name+'</span>';  
+                    return template;  
+                };
+                for (var prop in divTags) {
+                    if(counter==4)
+                        output += pageBreak;
+                    output += showtemplate(prop,divTags[prop]);
+                    counter++;
+                }
+                return output;
+            }
+
+            function outputPassword(key){
+                var $el = $(_this.element);
+                var currentValue = $el.val();
+                var updatedPassword = currentValue+ passwordMapping[key]
+                $el.val(updatedPassword);
+                console.log("element value is: " + $el.val());   
+                console.log("element id is : " + $el.attr("id"));  
             }
 
             function clearInput(){
                 $(_this.element).attr("value","");
-                $(_this.element).val("");
-                formatedPassword="";   
+                $(_this.element).val(""); 
             }
 
             function recordTiming(){
                 timing.push(timer);
-                generatePassword(timer);
+                outputPassword(timer);
                 console.log("Current time " + timer);
-                console.log(timing);
                 clearInterval(timerId);
                 timer=0;
                 timerId = setInterval(function(){
@@ -165,12 +198,11 @@
                 clearInterval(timerId);
                 timing.push(timer);
                 console.log("Current time " + timer);
-                console.log(timing);
                 outputPassword();
             }
         }
 
-    };
+    } );
 
     $.fn[musicalPassword] = function(options) {
 		return this.each(function() {
