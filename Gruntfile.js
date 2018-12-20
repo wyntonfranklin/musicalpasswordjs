@@ -19,7 +19,6 @@ module.exports = function (grunt) {
                   // includes files within path
                     {expand: true, src: ['src/musicalpassword.js'], dest: 'build/', filter: 'isFile'},
                     {expand: true, src: ['src/*'], dest: 'docs/', filter: 'isFile'},
-                    {expand: true, src: ['assets/*'], dest: 'build/', filter: 'isFile'},
                 ],
               },
           },
