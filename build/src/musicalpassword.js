@@ -23,7 +23,7 @@
         "so-g" : "s0g.mp3",
         "so-a" : "s0a.mp3",
         "so-b" : "s0b.mp3",
-        "fo-c" : "f0c.mp3"
+        "to-c" : "t0c.mp3"
     },
     divTags = {
         "so-c" : "C",
@@ -33,7 +33,7 @@
         "so-g" : "G",
         "so-a" : "A",
         "so-b" : "B",
-        "fo-c" : "C",
+        "to-c" : "C",
     },
     passwordMapping = {
         "so-c" : "P)x!6r",
@@ -43,13 +43,23 @@
         "so-g" : "p#2W9A",
         "so-a" : "2<r@R9",
         "so-b" : "5ZgR_7",
-        "fo-c" : "5?+xU$",
+        "to-c" : "5?+xU$",
+    },
+    keycodesMapping = {
+        67 : "so-c",
+        68 : "so-d",
+        69 : "so-e",
+        70 : "so-f",
+        71 : "so-g",
+        65 : "so-a",
+        66 : "so-b",
+        16 : "to-c",
     },
     defaults = {
         offset : 30,
         timer : false,
         assetsBaseDir:'./assets/',
-        identifier:"default",
+        keyslistener:false,
     };
 
     function Plugin(element, options) {
@@ -69,7 +79,10 @@
             $(this.element).attr("readOnly","readOnly");
 
             this.keyboard = $(draw());  // draw layout
+
             $(document.body).append(this.keyboard);
+
+            //attach listeners 
 
             $(this.element).on("click",function(){
                 console.log(_this.settings);
@@ -82,6 +95,29 @@
                 return false;
             });
 
+            $(document).on("click",function(){
+                clearKeyboardLayouts();
+            });
+
+            if(this.settings.keyslistener){
+                $(this.element).on('keydown', function(event) {
+                    var key = event.keyCode || event.charCode;
+                    triggerKeyByCode(key);
+                    return false;
+                });
+            }
+
+
+            //functions
+
+            function triggerKeyByCode(code){
+                console.log("keypress", code);
+                var key = keycodesMapping[code];
+                if(key !== undefined){
+                    play(keysSource[key]);
+                    outputPassword(passwordMapping[key]);
+                }
+            }
 
             function onElementClicked(el, $div){
                 if($div.find(".wf-mp-keys").length <= 0){
@@ -98,7 +134,6 @@
                     });
                     $div.on('click','.wf-done-button',function(){
                         $(_this.element).trigger('donebuttonpressed.musicalpassword');
-                        console.log("Done button pressed");
                         stopRecording();
                         clearKeyboardLayouts();
                         return false;
@@ -106,13 +141,6 @@
                 }
 
             }
-            $(document).on("click",function(){
-                clearKeyboardLayouts();
-            });
-            $(this.element).on('keydown', function(event) {
-                var key = event.keyCode || event.charCode;
-                return false;
-            });
 
             function onKeysClicked(event, element){
                 event.stopPropagation();

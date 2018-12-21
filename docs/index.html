@@ -76,13 +76,18 @@ crossorigin="anonymous"></script>
       
       <h3 id="options">Options</h3>
       <ul>
-        <li><strong>Timer:</strong><br>
+        <li><strong>Timer: true | false</strong><br>
             Adding a  time field to your password. You will have to play the tune within the correct time.
         </li>
         <li>
-          <strong>assetsBaseDir:</strong><br>
+          <strong>assetsBaseDir: "/path/location"</strong><br>
           The location of the base directory where the assets can be found. 
           The plugin will look in the folder to find the mp3 files to play.
+        </li>
+        <li>
+          <strong>keyslistener: true | false</strong><br>
+          Listen to certain key inputs from the keyboard and play the notes. 
+          You can use your keyboard to input the password.
         </li>
       </ul>
       <h3>Events</h3>
@@ -101,8 +106,11 @@ crossorigin="anonymous"></script>
           <input id="song" type="text" value=""/><br><br>
           <label>Form Password Field</label>
           <input id="password" type="password" value=""/><br><br>
-          <label>Event Text Field - On Done Pressed</label>
-          <input id="eventfield" type="text" value=""/>
+          <label>Events Text Field - On Buttons Pressed</label>
+          <input id="eventfield" type="text" value=""/><br><br>
+          <label>Marry had a little lamb melody (start at E )</label>
+          <input id="maryPassword" type="password" value=""/>&nbsp;<button id="submitBtn">Submit</button>
+
       </div>
       <h3 id="download">Download</h3>
       <p>This project can be found on github. 
@@ -131,6 +139,8 @@ crossorigin="anonymous"></script>
 </body>
 <script>
   $(document).ready(function(){
+    var marryPassword="FQz_8sR8b]e6P)x!6rR8b]e6FQz_8sFQz_8sFQz_8s";
+
     $("#password").musicalPassword({
       assetBaseDir:"../assets/"
     });
@@ -143,6 +153,22 @@ crossorigin="anonymous"></script>
     }).on("donebuttonpressed.musicalpassword",function(){
        alert("the done button is pressed");
     });
+    $('#eventfield').on("clearinput.musicalpassword",function(){
+      alert("the clear button is pressed");
+    });
+    $("#maryPassword").musicalPassword({
+      assetBaseDir:"../assets/"
+    });
+    $("#submitBtn").on("click",function(){
+       var userpassword = $("#maryPassword").val();
+       if(userpassword===marryPassword){
+         alert("successfully login");
+         $("#maryPassword").val("");
+       }else{
+         alert("wrong password");
+       }
+    });
+
   });
 </script>
 </html>

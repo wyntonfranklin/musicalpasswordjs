@@ -33,20 +33,30 @@ $("#element").musicalpassword({
 
 ### Options
 
-- timer:
+- timer: true | false
   Adding a  time value to your password. You will have to play the tune within the correct time.
-- assetsBaseDir:
+- assetsBaseDir: "file/path"
   The location of the base directory where the assets can be found. The plugin will look in the folder to find the mp3 files to play.
+- keyslistener: true | false
+  Listen to certain keyboard inputs and play the sounds associated with them. ( C, D, E, F, G, A, B)
 
 
 
 ### Events
 
-- donebuttonpressed.musicalpassword
+- donebuttonpressed.musicalpassword:
   The done button has been pressed. This occurs if the timer is active.
-- clearinput.musicalpassword
+- clearinput.musicalpassword:
   The input has been cleared using the clear button
 
 ### Demo
 
 http://www.igestdevelopment.com/musicalpasswordjs/
+
+
+
+### Compatibility
+
+This plugin uses the HTMLAudioElement to play the audio files.
+
+https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
