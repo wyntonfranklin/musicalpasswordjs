@@ -74,8 +74,6 @@
         init: function() {
             var _this = this;
 
-            console.log("plugin started...");
-
             $(this.element).attr("readOnly","readOnly");
 
             this.keyboard = $(draw());  // draw layout
@@ -85,7 +83,6 @@
             //attach listeners 
 
             $(this.element).on("click",function(){
-                console.log(_this.settings);
                 var position = $(_this.element).offset();
                 var tp = position.top + defaults.offset;
                 onElementClicked(this, _this.keyboard);
@@ -111,7 +108,6 @@
             //functions
 
             function triggerKeyByCode(code){
-                console.log("keypress", code);
                 var key = keycodesMapping[code];
                 if(key !== undefined){
                     play(keysSource[key]);
@@ -204,8 +200,7 @@
                 var $el = $(_this.element);
                 var currentValue = $el.val();
                 var updatedPassword = currentValue+key;
-                $el.val(updatedPassword);
-                console.log("element value is: " + $el.val());   
+                $el.val(updatedPassword);  
             }
 
             function clearInput(){
@@ -216,7 +211,6 @@
             function recordTiming(){
                 timing.push(timer);
                 outputPassword(timer);
-                console.log("Current time " + timer);
                 clearInterval(timerId);
                 timer=0;
                 timerId = setInterval(function(){
@@ -227,7 +221,6 @@
             function stopRecording(){
                 clearInterval(timerId);
                 timing.push(timer);
-                console.log("Current time " + timer);
                 timer=0;
             }
         }
