@@ -33,11 +33,11 @@ $("#element").musicalpassword({
 
 ### Options
 
-- timer: true | false
+- timer: true | false -
   Adding a  time value to your password. You will have to play the tune within the correct time.
-- assetsBaseDir: "file/path"
+- assetsBaseDir: "file/path" -
   The location of the base directory where the assets can be found. The plugin will look in the folder to find the mp3 files to play.
-- keyslistener: true | false
+- keyslistener: true | false -
   Listen to certain keyboard inputs and play the sounds associated with them. ( C, D, E, F, G, A, B)
 
 
